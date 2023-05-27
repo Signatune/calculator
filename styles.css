@@ -33,11 +33,22 @@
   font-family: digital7MonoItalic;
 }
 
+.operator {
+  background: #00bcff;
+  border-radius: 5px;
+}
+
 .buttons {
   flex: 4 1 0;
   display: flex;
   flex-wrap: wrap;
   gap: 5px;
+  border-radius: 5px;
+}
+
+#equals {
+  background: #ff9a00;
+  border-radius: 5px;
 }
 
 .buttons > button {
