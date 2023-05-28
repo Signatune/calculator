@@ -5,10 +5,12 @@ const operations = {
   divide: (a, b) => a / b,
 };
 
-let numA, numB, operator;
+let stored, operator;
+let equalsStored;
 
 let display = document.querySelector("div.display > output");
 display.textContent = "0";
+let lastPressed = "number";
 
 const operate = (a, b, operator) => {
   return operations[operator](a, b);
@@ -21,11 +23,18 @@ const appendDisplay = (digit) => {
   display.textContent = newDisplay;
 };
 
-const clearAll = () => {
+const clearDisplay = () => {
   display.textContent = "0";
-  numA = null;
-  numB = null;
+};
+
+const clearAll = () => {
+  clearDisplay();
+  stored = null;
   operator = null;
+};
+
+const getDisplayVal = () => {
+  return Number.parseInt(display.textContent);
 };
 
 let numberButtons = document.querySelectorAll("button.number");
@@ -33,6 +42,7 @@ let numberButtons = document.querySelectorAll("button.number");
 numberButtons.forEach((button) => {
   button.addEventListener("click", (e) => {
     appendDisplay(Number.parseInt(button.id));
+    lastPressed = "number";
   });
 });
 
@@ -44,31 +54,43 @@ let operators = document.querySelectorAll("button.operator");
 
 operators.forEach((operatorButton) => {
   operatorButton.addEventListener("click", (e) => {
-    if (!numA) {
-      numA = Number.parseInt(display.textContent);
+    if (lastPressed == "operator") {
       operator = operatorButton.id;
-      display.textContent = "0";
     } else {
-      numB = Number.parseInt(display.textContent);
-      let result = operate(numA, numB, operator);
+      stored = getDisplayVal();
+      display.textContent = "0";
       operator = operatorButton.id;
-      display.textContent = result;
     }
+
+    console.table({
+      stored: stored,
+      display: getDisplayVal(),
+      op: operator,
+    });
+
+    lastPressed = "operator";
   });
 });
 
 let equals = document.getElementById("equals");
 
 equals.addEventListener("click", (e) => {
-  let currentValue = Number.parseInt(display.textContent);
+  let displayVal = getDisplayVal();
 
-  if (numA && numB) {
-    let result = operate(currentValue, numB, operator);
-    display.textContent = result;
+  if (lastPressed == "equals") {
+    display.textContent = operate(displayVal, equalsStored, operator);
   } else {
-    let result = operate(numA, currentValue, operator);
-    numB = currentValue;
-
+    let result = operate(stored, displayVal, operator);
+    equalsStored = displayVal;
     display.textContent = result;
   }
+
+  lastPressed = "equals";
+
+  console.table({
+    stored: stored,
+    display: getDisplayVal(),
+    op: operator,
+    equals: equalsStored,
+  });
 });
