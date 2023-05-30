@@ -67,11 +67,15 @@ function setOperation(operator) {
 
 function evaluate() {
   if (currentOperator == null || shouldClearScreen) return;
-  display.textContent = operate(
-    firstOperand,
-    getDisplayValue(),
-    currentOperator
-  );
+  if (currentOperator == "divide" && getDisplayValue() == 0) {
+    display.textContent = "NaN";
+  } else {
+    display.textContent = operate(
+      firstOperand,
+      getDisplayValue(),
+      currentOperator
+    );
+  }
   currentOperator = null;
   shouldClearScreen = true;
 }
