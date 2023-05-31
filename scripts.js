@@ -15,9 +15,9 @@ numberButtons.forEach((button) => {
 });
 
 operators.forEach((operatorButton) => {
-  operatorButton.addEventListener("click", () => {
-    setOperation(operatorButton.id);
-  });
+  operatorButton.addEventListener("click", () =>
+    setOperation(operatorButton.id)
+  );
 });
 
 clearAll();
