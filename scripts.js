@@ -39,7 +39,7 @@ function clearScreen() {
 }
 
 function getDisplayValue() {
-  return Number.parseInt(display.textContent);
+  return Number.parseFloat(display.textContent);
 }
 
 function clearAll() {
