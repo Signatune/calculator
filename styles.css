@@ -52,7 +52,9 @@ body {
   border-radius: 5px;
 }
 
-.buttons > button {
+.buttons > button,
+button.operator,
+#equals {
   background: #ffffea;
   flex: 1 1 auto;
   height: 24%;
